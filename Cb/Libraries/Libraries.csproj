@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<OutputType>Library</OutputType>
 		<Description>A library for test automation</Description>
 		<ImplicitUsings>enable</ImplicitUsings>
@@ -16,11 +16,11 @@
 	<ItemGroup>
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
 		<PackageReference Include="FluentAssertions" Version="6.7.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 		<PackageReference Include="Reqnroll" Version="2.4.0" />
 		<PackageReference Include="Reqnroll.Microsoft.Extensions.DependencyInjection" Version="2.4.0" />
 		<PackageReference Include="Reqnroll.MsTest" Version="2.4.0" />
@@ -31,6 +31,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="StepDefinitions\GlobalSteps\Http\" />
+	  <Folder Include="StepDefinitions\GlobalSteps\Http\Services\" />
 	</ItemGroup>
 </Project>
