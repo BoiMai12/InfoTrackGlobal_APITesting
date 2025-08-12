@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<Description>A library for test automation</Description>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<RootNamespace>Libraries</RootNamespace>
+		<LangVersion>10</LangVersion>
+		<PackageId>Libraries</PackageId>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<AssemblyName>Libraries</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CsvHelper" Version="33.0.1" />
+		<PackageReference Include="FluentAssertions" Version="6.7.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Reqnroll" Version="2.4.0" />
+		<PackageReference Include="Reqnroll.Microsoft.Extensions.DependencyInjection" Version="2.4.0" />
+		<PackageReference Include="Reqnroll.MsTest" Version="2.4.0" />
+		<PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="2.4.0" />
+		<PackageReference Include="Reqnroll.Tools.MsBuild.Generation" Version="2.4.0" />
+		<PackageReference Include="RestSharp" Version="112.0.0" />
+		<PackageReference Include="TestRail" Version="3.2.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="StepDefinitions\GlobalSteps\Http\" />
+	</ItemGroup>
+</Project>
