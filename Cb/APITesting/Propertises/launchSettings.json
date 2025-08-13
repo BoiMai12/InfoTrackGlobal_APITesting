@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "APITesting": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    }
+  }
+}
