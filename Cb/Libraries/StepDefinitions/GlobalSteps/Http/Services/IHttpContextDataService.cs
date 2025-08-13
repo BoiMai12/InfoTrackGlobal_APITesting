@@ -16,5 +16,6 @@ public interface IHttpContextDataService
     public HttpBaseRequestContextData GetHttpBaseData();
     public HttpRequestContextData GetCurrentHttpData();
     public RestResponse GetCurrentHttpResponseData();
+
 }
 

@@ -1,0 +1,13 @@
+{
+  "language": {
+    "feature": "en"
+  },
+  "plugins": [
+    {
+      "name": "Reqnroll.Plugins.Allure"
+    }
+  ],
+  "stepAssemblies": [
+    { "assembly": "Libraries" }
+  ]
+}

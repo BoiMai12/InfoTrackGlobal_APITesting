@@ -17,10 +17,52 @@ public class HttpContextDataService : IHttpContextDataService
         _featureContext = featureContext;
         _scenarioContext = scenarioContext;
     }
-
     public void AddHttpBaseData(HttpBaseRequestContextData data)
     {
         _featureContext.Remove(ContextDataKeys.HttpBaseRequest);
         ContextDataHelper.Add(ContextDataKeys.HttpBaseRequest, data, _featureContext);
+    }
+
+    public void AddCurrentHttpData(HttpRequestContextData data)
+    {
+        _scenarioContext.Remove(ContextDataKeys.HttpCurrentRequest);
+        ContextDataHelper.Add(ContextDataKeys.HttpCurrentRequest, data, _scenarioContext);
+    }
+
+    public void AddCurrentHttpResponse(RestResponse restResponse)
+    {
+        _scenarioContext.Remove(ContextDataKeys.HttpCurrentResponse);
+        ContextDataHelper.Add(ContextDataKeys.HttpCurrentResponse, restResponse, _scenarioContext);
+    }
+
+    public HttpBaseRequestContextData GetHttpBaseData()
+    {
+        return ContextDataHelper.Get<HttpBaseRequestContextData>(
+            ContextDataKeys.HttpBaseRequest,
+            _featureContext,
+            _scenarioContext);
+    }
+
+    public HttpRequestContextData GetCurrentHttpData()
+    {
+        return ContextDataHelper.Get<HttpRequestContextData>(
+            ContextDataKeys.HttpCurrentRequest,
+            _featureContext,
+            _scenarioContext);
+    }
+    public RestResponse GetCurrentHttpResponseData()
+    {
+        return GetCurrentHttpResponse();
+    }
+    public void AddCurrentHttpResponseData(RestResponse restResponse)
+    {
+        AddCurrentHttpResponse(restResponse);
+    }
+    public RestResponse GetCurrentHttpResponse()
+    {
+        return ContextDataHelper.Get<RestResponse>(
+            ContextDataKeys.HttpCurrentResponse,
+            _featureContext,
+            _scenarioContext);
     }
 }

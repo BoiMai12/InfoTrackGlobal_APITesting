@@ -1,4 +1,5 @@
 ﻿using Libraries.StepDefinitions.GlobalSteps.Context.Services;
+using Libraries.StepDefinitions.GlobalSteps.Http;
 using Libraries.StepDefinitions.GlobalSteps.Http.Services;
 using Libraries.Support.Http;
 using Microsoft.Extensions.Configuration;
@@ -20,8 +21,8 @@ public abstract class Startup
         services.AddScoped<IHttpContextDataService, HttpContextDataService>();
         services.AddScoped<IVariableContextDataService, VariableContextDataService>();
         services.AddSingleton(_ => BuildConfiguration());
-        //services.AddScoped<HttpRequestStepDefinition>();
-        //services.AddScoped<HttpResponseStepDefinition>();
+        services.AddScoped<HttpRequestStepDefinition>();
+        services.AddScoped<HttpResponseStepDefinition>();
 
         return services;
     }
