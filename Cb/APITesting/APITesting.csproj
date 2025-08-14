@@ -8,20 +8,26 @@
   </PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Allure.Net.Commons" Version="2.12.1" />
+		<PackageReference Include="Allure.Reqnroll" Version="2.12.1" />
 		<PackageReference Include="CsvHelper" Version="33.0.1" />
-		<PackageReference Include="FluentAssertions" Version="6.7.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.8" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
 		<PackageReference Include="Reqnroll" Version="2.4.1" />
 		<PackageReference Include="Reqnroll.Microsoft.Extensions.DependencyInjection" Version="2.4.1" />
 		<PackageReference Include="Reqnroll.MsTest" Version="2.4.1" />
 		<PackageReference Include="Reqnroll.SpecFlowCompatibility" Version="2.4.1" />
 		<PackageReference Include="Reqnroll.Tools.MsBuild.Generation" Version="2.4.1" />
 		<PackageReference Include="RestSharp" Version="112.0.0" />
-		<PackageReference Include="TestRail" Version="3.2.1" />
+		<PackageReference Include="SonarAnalyzer.CSharp" Version="8.43.0.51858">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="MSTest.TestAdapter" Version="3.10.2" />
+		<PackageReference Include="MSTest.TestFramework" Version="3.10.2" />
+		<PackageReference Include="FluentAssertions" Version="6.7.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Libraries\Libraries.csproj" />
@@ -41,9 +47,11 @@
     <Folder Include="Features\APIFunctions\" />
     <Folder Include="Features\E2Eflow\" />
   </ItemGroup>
-	
 
 	<ItemGroup>
+	<None Update="appSettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
 	  <None Update="TestData\Users\CreateUserMorpheus.json">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>

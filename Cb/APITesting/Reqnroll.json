@@ -4,6 +4,10 @@
   },
   "plugins": [
     {
+      "name": "Reqnroll.DependencyInjection",
+      "type": "Runtime"
+    },
+    {
       "name": "Reqnroll.Plugins.Allure"
     }
   ],

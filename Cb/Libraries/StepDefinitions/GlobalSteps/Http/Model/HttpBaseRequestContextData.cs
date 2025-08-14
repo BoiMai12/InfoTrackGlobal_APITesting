@@ -9,5 +9,6 @@ namespace Libraries.StepDefinitions.GlobalSteps.Http.Model;
     public class HttpBaseRequestContextData
     {
         public string? BaseUrl { get; set; }
-    }
+        public string? apiKey { get; set; }
+}
 

@@ -4,16 +4,13 @@ using Libraries.StepDefinitions.GlobalSteps.Http.Services;
 using Libraries.Support.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Reqnroll.Microsoft.Extensions.DependencyInjection;
 
 namespace Libraries;
 
-public abstract class Startup
+public static class Startup
 {
+    [ScenarioDependencies]
     public static IServiceCollection CreateServices()
     {
         var services = new ServiceCollection();
@@ -29,7 +26,7 @@ public abstract class Startup
 
     public static IConfiguration BuildConfiguration()
     {
-        var environmentName = Environment.GetEnvironmentVariable("");
+        var environmentName = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT");
         var builder = new ConfigurationBuilder();
         builder.AddJsonFile("appSettings.json", true, true);
         if (!string.IsNullOrEmpty(environmentName))
