@@ -119,10 +119,7 @@ namespace APITesting.Features.APIFunctions
 #line 3
     #line hidden
 #line 4
-        await testRunner.GivenAsync("I set HTTP base URL from appSettings \"Staging:HttpBaseUrl\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 5
-  await testRunner.AndAsync("I set api key \"Staging:x-api-key\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+       await testRunner.GivenAsync("I set HTTP base URL from appSettings \"Staging:HttpBaseUrl\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
         }
         
@@ -134,7 +131,7 @@ namespace APITesting.Features.APIFunctions
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("User create User successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 7
+#line 6
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -147,23 +144,23 @@ namespace APITesting.Features.APIFunctions
 #line 3
     await this.FeatureBackgroundAsync();
 #line hidden
+#line 7
+    await testRunner.GivenAsync("I add Http request content from the file: \'Users/CreateUserMorpheus.json\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
 #line 8
-  await testRunner.GivenAsync("I add Http request content from the file: \'Users/CreateUserMorpheus.json\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+    await testRunner.WhenAsync("I send a POST request to \'/api/users\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 9
-  await testRunner.WhenAsync("I send a POST request to \'/api/users\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.ThenAsync("I should receive the HTTP response status code \'201\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 10
-  await testRunner.ThenAsync("I should receive the HTTP response status code \'201\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.AndAsync("I should receive the HTTP response has \'id\' is not NULL", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 11
-  await testRunner.AndAsync("I should receive the HTTP response has \'id\' is not NULL", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("I should receive the HTTP response has \'name\' is \'morpheus\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 12
-  await testRunner.AndAsync("I should receive the HTTP response has \'name\' is \'morpheus\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 13
-  await testRunner.AndAsync("I should receive the HTTP response has \'job\' is \'leader\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+       await testRunner.AndAsync("I should receive the HTTP response has \'job\' is \'leader\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

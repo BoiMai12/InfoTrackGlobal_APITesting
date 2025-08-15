@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 namespace Libraries.StepDefinitions.GlobalSteps.Http.Model;
 public class HttpRequestContextData
 {
-    internal object QueryHeaders;
-
     public List<HttpQueryParameter>? QueryParameters { get; set; }
     public List<HttpRequestHeader>? QueryHeader { get; set; }
     public string? Content { get; set; }

@@ -28,6 +28,21 @@ public class HttpContextDataService : IHttpContextDataService
         _scenarioContext.Remove(ContextDataKeys.HttpCurrentRequest);
         ContextDataHelper.Add(ContextDataKeys.HttpCurrentRequest, data, _scenarioContext);
     }
+    //public void AddCurrentHttpData(HttpRequestContextData data)
+    //{
+    //    if (!_scenarioContext.TryGetValue(ContextDataKeys.HttpCurrentRequest, out HttpRequestContextData existingData))
+    //        existingData = new HttpRequestContextData();
+    //    if (data.QueryHeader != null)
+    //        existingData.QueryHeader = data.QueryHeader;
+    //    if (data.QueryParameters != null)
+    //        existingData.QueryParameters = data.QueryParameters;
+    //    if (data.Content != null)
+    //        existingData.Content = data.Content;
+    //    if (data.ContentType != null)
+    //        existingData.ContentType = data.ContentType;
+
+    //    _scenarioContext[ContextDataKeys.HttpCurrentRequest] = existingData;
+    //}
 
     public void AddCurrentHttpResponse(RestResponse restResponse)
     {

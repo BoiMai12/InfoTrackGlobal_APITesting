@@ -27,11 +27,6 @@ public class HttpRequestStepDefinition
     private readonly IVariableContextDataService _variableContextDataService;
     private readonly HttpResponseStepDefinition _httpResponseStepDefinition;
 
-    //Use ThreadLocal<Dictionary<string> ensure thread safety when running parallel tests
-    private static ThreadLocal<Dictionary<string, string>> _replacedPlaceholders =
-        new(() => new Dictionary<string, string>());
-    private string jsonContentTemplate;
-
     public HttpRequestStepDefinition(
         IHttpService httpService,
         IConfiguration configuration,
@@ -59,40 +54,22 @@ public class HttpRequestStepDefinition
         _httpContextDataService.AddHttpBaseData(data);
     }
 
-    [Given(@"I set api key ""([^""]*)""")]
-    public void GivenISetApiKey(string apiKey)
-    {
-        var keydata = _configuration[apiKey];
-        var data = new HttpRequestContextData
-        {
-            QueryHeader = new List<HttpRequestHeader>(),
-            Content = jsonContentTemplate
-        };
-        data.QueryHeader.Add(new HttpRequestHeader("x-api-key", keydata));
-        _httpContextDataService.AddCurrentHttpData(data);
-    }
-
-    [Given(@"I set the request headers:")]
-    public void GivenISetTheRequestHeaders(DataTable dataTable)
-    {
-
-        var parameters = dataTable.CreateSet<HttpRequestHeader>();
-        var data = new HttpRequestContextData
-        {
-            QueryHeader = new List<HttpRequestHeader>()
-        };
-        foreach (var item in parameters) data.QueryHeader.Add(new HttpRequestHeader(item.Name, item.Value));
-        _httpContextDataService.AddCurrentHttpData(data);
-
-    }
-
     [Given(@"I add Http request content from the file: '([^']*)'")]
     public void GivenIAddHttpRequestContentFromTheFile(string path)
     {
+        var apiKey = _configuration["Staging:x-api-key"];
+
+
         var data = new HttpRequestContextData
         {
+            QueryHeader = new List<HttpRequestHeader>(),
             Content = TestDataHelper.ReadFile(path)
         };
+        if (!string.IsNullOrWhiteSpace(apiKey))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("x-api-key", apiKey));
+        }
         _httpContextDataService.AddCurrentHttpData(data);
     }
 
@@ -101,6 +78,7 @@ public class HttpRequestStepDefinition
     [When(@"I send a POST request to '([^']*)'")]
     public void WhenISendAPOSTRequestTo(string url)
     {
+
         var httpBaseRequest = _httpContextDataService.GetHttpBaseData();
         var currentHttpRequest = _httpContextDataService.GetCurrentHttpData();
         var response = _httpService.Post(httpBaseRequest.BaseUrl, url, DataFormat.Json,
