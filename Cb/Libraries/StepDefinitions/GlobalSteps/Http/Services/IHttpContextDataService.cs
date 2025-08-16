@@ -12,7 +12,7 @@ public interface IHttpContextDataService
 {
     public void AddHttpBaseData(HttpBaseRequestContextData data);
     public void AddCurrentHttpData(HttpRequestContextData data);
-    public void AddCurrentHttpResponseData(RestResponse restResponse);
+    public void AddCurrentHttpResponse(RestResponse restResponse);
     public HttpBaseRequestContextData GetHttpBaseData();
     public HttpRequestContextData GetCurrentHttpData();
     public RestResponse GetCurrentHttpResponseData();

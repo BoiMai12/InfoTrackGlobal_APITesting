@@ -58,12 +58,40 @@ public class HttpRequestStepDefinition
     public void GivenIAddHttpRequestContentFromTheFile(string path)
     {
         var apiKey = _configuration["Staging:x-api-key"];
-
-
+        var bearerToken = _variableContextDataService.GetVariable("BearerToken");
         var data = new HttpRequestContextData
         {
             QueryHeader = new List<HttpRequestHeader>(),
             Content = TestDataHelper.ReadFile(path)
+        };
+        if (!string.IsNullOrWhiteSpace(apiKey))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("x-api-key", apiKey!));
+        }
+
+        if (!string.IsNullOrWhiteSpace(bearerToken))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("Authorization", $"Bearer {bearerToken!}"));
+        }
+
+        _httpContextDataService.AddCurrentHttpData(data);
+    }
+
+    [Given("I add Http request content from the file: '(.*)' with data from appSettings")]
+    public void GivenIAddHttpRequestContentFromTheFileWithDataFromAppSettings(string path)
+    {
+        var email = _configuration["Staging:email"];
+        var password = _configuration["Staging:password"];
+        var apiKey = _configuration["Staging:x-api-key"];
+        var jsonContentTemplate = TestDataHelper.ReadFile(path);
+        jsonContentTemplate = jsonContentTemplate.Replace("emailPlaceHolder", email);
+        jsonContentTemplate = jsonContentTemplate.Replace("passwordPlaceHolder", password);
+        var data = new HttpRequestContextData
+        {
+            QueryHeader = new List<HttpRequestHeader>(),
+            Content = jsonContentTemplate
         };
         if (!string.IsNullOrWhiteSpace(apiKey))
         {
@@ -73,18 +101,70 @@ public class HttpRequestStepDefinition
         _httpContextDataService.AddCurrentHttpData(data);
     }
 
+
+    [Given(@"I add Http request content from the file: '(.*)' with invalid '(.*)'")]
+    public void GivenIAddHttpRequestContentFromTheFileWithInvalid(string path, string auth)
+    {
+        var bearerToken = _variableContextDataService.GetVariable("BearerToken");
+        var data = new HttpRequestContextData
+        {
+            QueryHeader = new List<HttpRequestHeader>(),
+            Content = TestDataHelper.ReadFile(path)
+        };
+        data.QueryHeader ??= new List<HttpRequestHeader>();
+        data.QueryHeader.Add(new HttpRequestHeader("x-api-key", auth));
+        if (!string.IsNullOrWhiteSpace(bearerToken))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("Authorization", $"Bearer {bearerToken!}"));
+        }
+        _httpContextDataService.AddCurrentHttpData(data);
+    }
+
+    [When(@"I send a GET request to '/api/users/(.*)'")]
+    [Given(@"I send a GET request to '/api/users/(.*)'")]
+    public async Task GivenISendAGETRequestTo(int userId)
+    {
+        var path = $"/api/users/{userId}";
+        var apiKey = _configuration["Staging:x-api-key"];
+        var bearerToken = _variableContextDataService.GetVariable("BearerToken");
+        var httpBaseRequest = _httpContextDataService.GetHttpBaseData();
+        var data = new HttpRequestContextData
+        {
+            QueryHeader = new List<HttpRequestHeader>(),
+            Content = TestDataHelper.ReadFile(path)
+        };
+        if (!string.IsNullOrWhiteSpace(apiKey))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("x-api-key", apiKey!));
+        }
+        if (!string.IsNullOrWhiteSpace(bearerToken))
+        {
+            data.QueryHeader ??= new List<HttpRequestHeader>();
+            data.QueryHeader.Add(new HttpRequestHeader("Authorization", $"Bearer {bearerToken!}"));
+        }
+        _httpContextDataService.AddCurrentHttpData(data);
+        var currentHttpRequest = _httpContextDataService.GetCurrentHttpData();
+        var response = await _httpService.Get(httpBaseRequest.BaseUrl, path,
+       currentHttpRequest.QueryHeader);
+        _httpContextDataService.AddCurrentHttpResponse(response);
+    }
+
+
+
     #endregion
 
     [When(@"I send a POST request to '([^']*)'")]
-    public void WhenISendAPOSTRequestTo(string url)
+    public async Task WhenISendAPOSTRequestTo(string url)
     {
-
         var httpBaseRequest = _httpContextDataService.GetHttpBaseData();
         var currentHttpRequest = _httpContextDataService.GetCurrentHttpData();
-        var response = _httpService.Post(httpBaseRequest.BaseUrl, url, DataFormat.Json,
-            currentHttpRequest.Content,currentHttpRequest.QueryHeader);
-        _httpContextDataService.AddCurrentHttpResponseData(response);
+        var response = await _httpService.Post(httpBaseRequest.BaseUrl, url, DataFormat.Json,
+            currentHttpRequest.Content, currentHttpRequest.QueryHeader);
+        _httpContextDataService.AddCurrentHttpResponse(response);
     }
+
 
 
 

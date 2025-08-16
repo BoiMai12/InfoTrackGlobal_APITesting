@@ -18,6 +18,7 @@ namespace Libraries.StepDefinitions.GlobalSteps.Context.Services;
         public void AddVariable(string variableName, string? value) 
         {
         _scenarioContext.Add(GetContextKey(variableName), value);
+        _featureContext.Add(GetContextKey(variableName), value);
     }
         public string GetVariable(string variableName)
         {
@@ -25,7 +26,7 @@ namespace Libraries.StepDefinitions.GlobalSteps.Context.Services;
             GetContextKey(variableName),
             _featureContext,
             _scenarioContext);
-    }
+        }
         private string GetContextKey(string variableName)
         {
             return $"{ContextDataKeys.VariablePrefix}{variableName}";

@@ -124,14 +124,14 @@ namespace APITesting.Features.APIFunctions
         }
         
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
-        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("User create User successfully")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("00_Login app successfully")]
         [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Users")]
-        public async global::System.Threading.Tasks.Task UserCreateUserSuccessfully()
+        public async global::System.Threading.Tasks.Task _00_LoginAppSuccessfully()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("User create User successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 6
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("00_Login app successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 7
  this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -144,23 +144,184 @@ namespace APITesting.Features.APIFunctions
 #line 3
     await this.FeatureBackgroundAsync();
 #line hidden
-#line 7
-    await testRunner.GivenAsync("I add Http request content from the file: \'Users/CreateUserMorpheus.json\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
 #line 8
-    await testRunner.WhenAsync("I send a POST request to \'/api/users\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+    await testRunner.GivenAsync("I add Http request content from the file: \'Users/LoginRequest_Template.json\' with" +
+                        " data from appSettings", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 9
-    await testRunner.ThenAsync("I should receive the HTTP response status code \'201\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+    await testRunner.WhenAsync("I send a POST request to \'api/login\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 10
-    await testRunner.AndAsync("I should receive the HTTP response has \'id\' is not NULL", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.ThenAsync("I should receive the HTTP response status code \'200\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 11
+    await testRunner.GivenAsync("I save HTTP response \'token\' to variable \'BearerToken\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Create user successfully")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Users")]
+        public async global::System.Threading.Tasks.Task CreateUserSuccessfully()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Create user successfully", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 13
+ this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 14
+    await testRunner.GivenAsync("I add Http request content from the file: \'Users/CreateUserMorpheus.json\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 15
+    await testRunner.WhenAsync("I send a POST request to \'/api/users\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 16
+    await testRunner.ThenAsync("I should receive the HTTP response status code \'201\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 17
     await testRunner.AndAsync("I should receive the HTTP response has \'name\' is \'morpheus\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 12
+#line 18
        await testRunner.AndAsync("I should receive the HTTP response has \'job\' is \'leader\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Can not create user due to authentication failure")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Users")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("reqres", "403", "Invalid or inactive API key", null)]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("", "401", "Missing API key", null)]
+        public async global::System.Threading.Tasks.Task CanNotCreateUserDueToAuthenticationFailure(string authentication, string statusCode, string errorMessage, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("authentication", authentication);
+            argumentsOfScenario.Add("statusCode", statusCode);
+            argumentsOfScenario.Add("errorMessage", errorMessage);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Can not create user due to authentication failure", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 21
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 22
+    await testRunner.GivenAsync(string.Format("I add Http request content from the file: \'Users/CreateUserMorpheus.json\' with in" +
+                            "valid \'{0}\'", authentication), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 23
+    await testRunner.WhenAsync("I send a POST request to \'/api/users\'", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 24
+    await testRunner.ThenAsync(string.Format("I should receive the HTTP response status code {0}", statusCode), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 25
+    await testRunner.AndAsync(string.Format("I should receive the HTTP response has \'error\' is {0}", errorMessage), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Get user by Id")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Users")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("2", "200", "2", null)]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("467", "404", "", null)]
+        public async global::System.Threading.Tasks.Task GetUserById(string userId, string statusCode, string expectedId, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("UserId", userId);
+            argumentsOfScenario.Add("statusCode", statusCode);
+            argumentsOfScenario.Add("expectedId", expectedId);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Get user by Id", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 32
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 33
+    await testRunner.GivenAsync(string.Format("I send a GET request to \'/api/users/{0}\'", userId), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 34
+    await testRunner.ThenAsync(string.Format("I should receive the HTTP response status code {0}", statusCode), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 35
+    await testRunner.AndAsync(string.Format("I should receive the HTTP response has \'data.Id\'\' is {0}", expectedId), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestMethodAttribute()]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DescriptionAttribute("Can not Get user due to authentication failure")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.TestPropertyAttribute("FeatureTitle", "Users")]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("reqres", "403", "Invalid or inactive API key", "2", null)]
+        [Microsoft.VisualStudio.TestTools.UnitTesting.DataRowAttribute("", "401", "Missing API key", "2", null)]
+        public async global::System.Threading.Tasks.Task CanNotGetUserDueToAuthenticationFailure(string authentication, string statusCode, string errorMessage, string userId, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("authentication", authentication);
+            argumentsOfScenario.Add("statusCode", statusCode);
+            argumentsOfScenario.Add("errorMessage", errorMessage);
+            argumentsOfScenario.Add("UserId", userId);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Can not Get user due to authentication failure", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 45
+    this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+    await this.FeatureBackgroundAsync();
+#line hidden
+#line 46
+    await testRunner.GivenAsync(string.Format("I add Http request content from the file: \'Users/CreateUserMorpheus.json\' with in" +
+                            "valid \'{0}\'", authentication), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 47
+    await testRunner.WhenAsync(string.Format("I send a GET request to \'/api/users/{0}\'", userId), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 48
+    await testRunner.ThenAsync(string.Format("I should receive the HTTP response status code {0}", statusCode), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 49
+    await testRunner.AndAsync(string.Format("I should receive the HTTP response has \'PayLoad.Id\' is {0}", errorMessage), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

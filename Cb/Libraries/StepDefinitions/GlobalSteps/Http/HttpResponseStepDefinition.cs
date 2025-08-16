@@ -37,14 +37,15 @@ public class HttpResponseStepDefinition
 
     #region Then
 
-    [Then(@"I should receive the HTTP response status code '([^']*)'")]
+    [Then(@"I should receive the HTTP response status code '?([^']*)'?")]
     public void ThenIShouldReceiveTheHTTPResponseStatusCode(int expected)
     {
         var response = _httpContextDataService.GetCurrentHttpResponseData();
         ((int)response.StatusCode).Should().Be(expected);
     }
 
-    [Then("I should receive the HTTP response has '(.+)' is '(.+)'")]
+
+    [Then(@"I should receive the HTTP response has '(.+)' is '?([^']*)'?")]
     public void ThenIShouldReceiveTheHTTPResponseHasIs(string path, string expected)
     {
         var response = _httpContextDataService.GetCurrentHttpResponseData();
@@ -52,13 +53,22 @@ public class HttpResponseStepDefinition
         selectdValue.Should().Be(expected);
     }
 
-    [Then("I should receive the HTTP response has '(.+)' is not NULL")]
+    [Then(@"I should receive the HTTP response has '(.+)' is not NULL")]
     public void ThenIShouldReceiveTheHTTPResponseHasIsNotNULL(string path)
     {
         var response = _httpContextDataService.GetCurrentHttpResponseData();
         var selectdValue = GetSelectedJsonPathAsString(response, path);
         selectdValue.Should().NotBeNull();
     }
+
+    [Given(@"I save HTTP response '([^']*)' to variable '([^']*)'")]
+    public void GivenISaveHTTPResponseToVariable(string path, string variableName)
+    {
+        var response = _httpContextDataService.GetCurrentHttpResponseData();
+        _featureContext[variableName] = GetSelectedJsonPathAsString(response, path);
+        _variableContextDataService.AddVariable(variableName, _featureContext[variableName]?.ToString());
+    }
+
 
     #endregion
 

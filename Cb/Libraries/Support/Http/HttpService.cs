@@ -1,4 +1,5 @@
-﻿using RestSharp;
+﻿using Libraries.StepDefinitions.GlobalSteps.Http.Model;
+using RestSharp;
 using System.Net.Mime;
 using System.Reflection.PortableExecutable;
 
@@ -12,91 +13,49 @@ public class HttpService : IHttpService
         var request = new RestRequest(path);
         return client.Get(request);
     }
-
-    public RestResponse Get(string? baseUrl, string path, List<HttpQueryParameter>? queryParams)
+    public async Task<RestResponse> Get(string? baseUrl, string path, List<HttpRequestHeader>? headers)
     {
-        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)));
+        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
+        {
+            ThrowOnAnyError = false,
+        };
         var client = new RestClient(restClientOptions);
         var request = new RestRequest(path)
         {
             Timeout = TimeSpan.FromMinutes(10)
         };
-        foreach (var item in queryParams!) request.AddQueryParameter(item.Name!, item.Value);
-        RestResponse response = null!;
-        bool errorNotReceived;
-        do
+        if (headers != null)
         {
-            try
-            {
-                response = client.Get(request);
-                errorNotReceived = true;
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Request failed: {ex.Message}");
-                errorNotReceived = false;
-            }
-        } while (errorNotReceived != true);
-
-        return response;
+            foreach (var item in headers)
+                request.AddHeader(item.Name, item.Value);
+        }
+        return await client.ExecuteGetAsync<ResponseModel>(request);
     }
 
-    public RestResponse Post(string? baseUrl, string path, DataFormat contentType, string? content)
+    public async Task<RestResponse> Post(string? baseUrl, string path, DataFormat contentType, string? content, List<HttpRequestHeader>? headers)
     {
-        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)));
+        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
+        {
+            ThrowOnAnyError = false,
+        };
         var client = new RestClient(restClientOptions);
-        var request = new RestRequest(path)
+
+        var request = new RestRequest(path, Method.Post)
         {
             Timeout = TimeSpan.FromMinutes(10),
             RequestFormat = contentType
         };
-        request.AddBody(content ?? throw new ArgumentNullException(nameof(content)));
-        return client.Post(request);
+        if (!string.IsNullOrWhiteSpace(content))
+        {
+            request.AddStringBody(content, contentType);
+        }
+        if (headers != null)
+        {
+            foreach (var item in headers)
+                request.AddHeader(item.Name, item.Value);
+        }
+        return await client.ExecutePostAsync<ResponseModel>(request);
     }
 
-    public RestResponse Post(string? baseUrl, string path, DataFormat contentType, string? content,
-        List<HttpRequestHeader>? headers)
-    {
-        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)));
-        var client = new RestClient(restClientOptions);
-        var request = new RestRequest(path)
-        {
-            Timeout = TimeSpan.FromMinutes(10),
-            RequestFormat = contentType
-        };
-        request.AddBody(content ?? throw new ArgumentNullException(nameof(content)));
-        if (headers == null) return client.Post(request);
-        foreach (var item in headers)
-            request.AddHeader(item.Name, item.Value);
-        return client.Post(request);
-    }
-
-    public RestResponse Delete(string? baseUrl, string path, List<HttpQueryParameter>? queryParams)
-    {
-        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)));
-        var client = new RestClient(restClientOptions);
-        var request = new RestRequest(path)
-        {
-            Timeout = TimeSpan.FromMinutes(10)
-        };
-        foreach (var item in queryParams!) request.AddQueryParameter(item.Name!, item.Value);
-        RestResponse response = null!;
-        bool errorNotReceived;
-        do
-        {
-            try
-            {
-                response = client.Delete(request);
-                errorNotReceived = true;
-            }
-            catch (HttpRequestException ex)
-            {
-                Console.WriteLine($"Request failed: {ex.Message}");
-                errorNotReceived = false;
-            }
-        } while (errorNotReceived != true);
-
-        return response;
-    }
 }
 

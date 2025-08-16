@@ -13,6 +13,4 @@ public class HttpRequestHeaderStepModel
     public List<HttpRequestHeader>? QueryHeader { get; set; }
     public string? Content { get; set; }
     public string? ContentType { get; set; }
-
-
 }
