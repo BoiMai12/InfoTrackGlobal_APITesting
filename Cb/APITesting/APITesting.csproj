@@ -44,7 +44,6 @@
 	
 
 	<ItemGroup>
-    <Folder Include="Features\APIFunctions\" />
     <Folder Include="Features\E2Eflow\" />
   </ItemGroup>
 
@@ -53,6 +52,9 @@
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	</None>
 	  <None Update="TestData\Users\CreateUserMorpheus.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="TestData\Users\LoginRequest_Template_Unsuccessfulljson">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	  <None Update="TestData\Users\LoginRequest_Template.json">

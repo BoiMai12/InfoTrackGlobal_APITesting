@@ -13,6 +13,25 @@ public class HttpService : IHttpService
         var request = new RestRequest(path);
         return client.Get(request);
     }
+    public async Task<RestResponse> Delete(string? baseUrl, string path, List<HttpRequestHeader>? headers)
+    {
+        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
+        {
+            ThrowOnAnyError = false,
+        };
+        var client = new RestClient(restClientOptions);
+        var request = new RestRequest(path, Method.Delete)
+        {
+            Timeout = TimeSpan.FromMinutes(10)
+        };
+        if (headers != null)
+        {
+            foreach (var item in headers)
+                request.AddHeader(item.Name, item.Value);
+        }
+        return await client.ExecuteGetAsync<ResponseModel>(request);
+    }
+
     public async Task<RestResponse> Get(string? baseUrl, string path, List<HttpRequestHeader>? headers)
     {
         var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
@@ -20,7 +39,7 @@ public class HttpService : IHttpService
             ThrowOnAnyError = false,
         };
         var client = new RestClient(restClientOptions);
-        var request = new RestRequest(path)
+        var request = new RestRequest(path, Method.Get)
         {
             Timeout = TimeSpan.FromMinutes(10)
         };
@@ -41,6 +60,56 @@ public class HttpService : IHttpService
         var client = new RestClient(restClientOptions);
 
         var request = new RestRequest(path, Method.Post)
+        {
+            Timeout = TimeSpan.FromMinutes(10),
+            RequestFormat = contentType
+        };
+        if (!string.IsNullOrWhiteSpace(content))
+        {
+            request.AddStringBody(content, contentType);
+        }
+        if (headers != null)
+        {
+            foreach (var item in headers)
+                request.AddHeader(item.Name, item.Value);
+        }
+        return await client.ExecutePostAsync<ResponseModel>(request);
+    }
+
+    public async Task<RestResponse> Put(string? baseUrl, string path, DataFormat contentType, string? content, List<HttpRequestHeader>? headers)
+    {
+        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
+        {
+            ThrowOnAnyError = false,
+        };
+        var client = new RestClient(restClientOptions);
+
+        var request = new RestRequest(path, Method.Put)
+        {
+            Timeout = TimeSpan.FromMinutes(10),
+            RequestFormat = contentType
+        };
+        if (!string.IsNullOrWhiteSpace(content))
+        {
+            request.AddStringBody(content, contentType);
+        }
+        if (headers != null)
+        {
+            foreach (var item in headers)
+                request.AddHeader(item.Name, item.Value);
+        }
+        return await client.ExecutePostAsync<ResponseModel>(request);
+    }
+
+    public async Task<RestResponse> Delete(string? baseUrl, string path, DataFormat contentType, string? content, List<HttpRequestHeader>? headers)
+    {
+        var restClientOptions = new RestClientOptions(baseUrl ?? throw new ArgumentNullException(nameof(baseUrl)))
+        {
+            ThrowOnAnyError = false,
+        };
+        var client = new RestClient(restClientOptions);
+
+        var request = new RestRequest(path, Method.Delete)
         {
             Timeout = TimeSpan.FromMinutes(10),
             RequestFormat = contentType
